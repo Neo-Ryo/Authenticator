@@ -5,6 +5,13 @@
     "rootDir": "./",
     "outDir": "./build",
     "esModuleInterop": true,
-    "strict": true
-  }
+    "strict": true,
+    "resolveJsonModule": true,
+    "baseUrl": "./",
+    "paths": {
+      "test/*": ["test/*"]
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude" : ["src/**/*.test.ts"]
 }

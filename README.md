@@ -1,1 +1,1 @@
-# Simple boilerplate for nodejs
+# Service boilerplate template

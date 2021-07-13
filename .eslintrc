@@ -1,0 +1,30 @@
+{
+    "env": {
+        "node": true,
+        "jest": true
+    },
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+        "prettier",
+        "@typescript-eslint"
+    ],
+    "rules": {
+        "@typescript-eslint/explicit-function-return-type": "on",
+        "@typescript-eslint/explicit-module-boundary-types": "on"
+    },
+    "overrides": [
+        {
+            "files": ["*.ts", "*.tsx"],
+            "rules": {
+                "@typescript-eslint/explicit-function-return-type": ["error"],
+                "@typescript-eslint/explicit-module-boundary-types": ["error"]
+    	    }
+        }
+    ],
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:prettier/recommended"
+    ]
+}

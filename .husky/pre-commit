@@ -5,3 +5,4 @@ yarn prettier:fix
 # I rather have info about linting error than eslint fixing all,
 # I will look into it to have a fully functionnal auto linter.
 yarn lint
+yarn test
