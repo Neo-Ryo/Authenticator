@@ -1,0 +1,135 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "API boilerplate",
+    "description": "This is the boilerplate API documentation",
+    "license": {
+      "name": "Neomanis"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000/"
+    }
+  ],
+  "paths": {
+    "/get-example": {
+      "get": {
+        "description": "GET example",
+        "operationId": "getExample",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successfull GET",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetResponseExample"
+                },
+                "examples": {
+                  "Response for /get-example": {
+                    "value": {
+                      "foo": {
+                        "bar": "toto",
+                        "baz": 777,
+                        "grault": true
+                      },
+                      "qux": ["titi", "tutu", "tete"],
+                      "quux": [1, "toto"],
+                      "corge": [{"bla": "blub"}, {"blabla": "bla"}]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvalidRequestErrorExample"
+                },
+                "examples": {
+                  "Invalid request on /get-example": {
+                    "value": {
+                      "statusCode": 400,
+                      "message": "Invalid request"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "GetResponseExample": {
+        "type": "object",
+        "properties": {
+          "foo": {
+            "properties": {
+              "bar": {
+                "type": "string"
+              },
+              "baz": {
+                "type": "integer"
+              },
+              "grault": {
+                "type": "boolean"
+              }
+            }
+          },
+          "qux": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "quux": {
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            }
+          },
+          "corge": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "bla": {
+                  "type": "string"
+                },
+                "blabla": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "InvalidRequestErrorExample": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
