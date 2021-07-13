@@ -10,7 +10,7 @@
  */
 
 export interface GetResponseExample {
-    foo?: { bar?: string; baz?: number };
+    foo?: { bar?: string; baz?: number; grault?: boolean };
     qux?: string[];
     quux?: (string | number)[];
     corge?: { bla?: string; blabla?: string }[];

@@ -32,7 +32,8 @@
                     "value": {
                       "foo": {
                         "bar": "toto",
-                        "baz": 777
+                        "baz": 777,
+                        "grault": true
                       },
                       "qux": ["titi", "tutu", "tete"],
                       "quux": [1, "toto"],
@@ -77,6 +78,9 @@
               },
               "baz": {
                 "type": "integer"
+              },
+              "grault": {
+                "type": "boolean"
               }
             }
           },
