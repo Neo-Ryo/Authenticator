@@ -5,6 +5,7 @@ import helmet from "helmet";
 import dotenv from "dotenv";
 import swaggerUi from "swagger-ui-express";
 import * as swaggerDoc from "./src/swagger/swagger.json";
+import { statusRouter } from "./src/routes/statusRoutes";
 
 dotenv.config();
 
@@ -28,5 +29,6 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 app.use("/apiDocs", swaggerUi.serve, swaggerUi.setup(swaggerDoc));
+app.use("/status", statusRouter);
 
 app.listen(process.env.PORT, () => logger.info(`Server running on port:${process.env.PORT}...`));
