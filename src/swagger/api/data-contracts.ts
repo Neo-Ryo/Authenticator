@@ -10,13 +10,23 @@
  */
 
 export interface GetResponseExample {
-    foo?: { bar?: string; baz?: number; grault?: boolean };
-    qux?: string[];
-    quux?: (string | number)[];
-    corge?: { bla?: string; blabla?: string }[];
+  foo?: { bar?: string; baz?: number; grault?: boolean };
+  qux?: string[];
+  quux?: (string | number)[];
+  corge?: { bla?: string; blabla?: string }[];
+}
+
+export interface ServiceStatus {
+  code: number;
+  message: string;
+}
+
+export interface ServerError {
+  statusCode: number;
+  message: string;
 }
 
 export interface InvalidRequestErrorExample {
-    statusCode?: number;
-    message?: string;
+  statusCode: number;
+  message: string;
 }

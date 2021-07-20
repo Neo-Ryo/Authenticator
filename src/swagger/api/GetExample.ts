@@ -13,17 +13,17 @@ import { GetResponseExample, InvalidRequestErrorExample } from "./data-contracts
 import { HttpClient, RequestParams } from "./http-client";
 
 export class GetExample<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
-    /**
-     * @description GET example
-     *
-     * @name GetExample
-     * @request GET:/get-example
-     */
-    getExample = (params: RequestParams = {}) =>
-        this.request<GetResponseExample, InvalidRequestErrorExample>({
-            path: `/get-example`,
-            method: "GET",
-            format: "json",
-            ...params,
-        });
+  /**
+   * @description GET example
+   *
+   * @name GetExample
+   * @request GET:/get-example
+   */
+  getExample = (params: RequestParams = {}) =>
+    this.request<GetResponseExample, InvalidRequestErrorExample>({
+      path: `/get-example`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
 }

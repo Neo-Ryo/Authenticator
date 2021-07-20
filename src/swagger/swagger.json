@@ -64,6 +64,80 @@
           }
         }
       }
+    },
+    "/status": {
+      "get": {
+        "summary": "Check the status of the service",
+        "description": "Get service status",
+        "operationId": "Status",
+        "requestBody": {
+          "description": "Status Object => Object{code: status.code, message: status.message}",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "$ref": "#/components/schemas/ServiceStatus"
+                  }
+                }
+              },
+              "examples": {
+                "Status OK": {
+                  "value": {
+                    "code": 200,
+                    "message": "ok"
+                  }
+                },
+                "Status Error": {
+                  "value": {
+                    "code": 500,
+                    "message": "Some error message"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Service ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerError"
+                },
+                "examples": {
+                  "Service ok": {
+                    "value": {
+                      "statusCode": 200,
+                      "message": "ok"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Service error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerError"
+                },
+                "examples": {
+                  "Service Error": {
+                    "value": {
+                      "statusCode": 500,
+                      "message": "Some error message"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -119,6 +193,30 @@
           }
         }
       },
+      "ServiceStatus": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": ["code", "message"]
+      },
+      "ServerError": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": ["statusCode", "message"]
+      },
       "InvalidRequestErrorExample": {
         "type": "object",
         "properties": {
@@ -128,7 +226,8 @@
           "message": {
             "type": "string"
           }
-        }
+        },
+        "required": ["statusCode", "message"]
       }
     }
   }
