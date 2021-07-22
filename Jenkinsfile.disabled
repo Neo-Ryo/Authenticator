@@ -1,6 +1,3 @@
-// Jenkinsfile for doc_rules Project
-// Objective: Deploy this static website on Absanz Server
-
 pipeline {
     agent{
         label "Crait"
@@ -114,8 +111,12 @@ pipeline {
 			}
             steps{
 			sh 'echo "Go to the Registry!"'
+			//avec numéro de version
             sh "sudo docker tag ${env.IMAGE_NAME}${env.VER_DEV} nexus.neomanis.bzh:8443/${env.IMAGE_NAME}${env.VER_DEV}"
-            sh "sudo docker push nexus.neomanis.bzh:8443/${env.IMAGE_NAME}${env.VER_DEV}"
+            sh "sudo docker push ${env.NEXUS_ADR}/${env.IMAGE_NAME}${env.VER_DEV}"
+            //version latest
+            sh "sudo docker tag ${env.IMAGE_NAME}${env.VER_DEV} nexus.neomanis.bzh:8443/${env.IMAGE_NAME}-dev/latest"
+            sh "sudo docker push ${env.NEXUS_ADR}/${env.IMAGE_NAME}-dev/latest"
             sh 'echo "Update to the store... OK!"'
 			}
 		}
@@ -127,6 +128,7 @@ pipeline {
                 sh 'echo "Cleaning last build"'
                 // Launch Build
                 sh "sudo docker image rm ${env.NEXUS_ADR}/${env.IMAGE_NAME}${env.VER_DEV}"
+                sh "sudo docker image rm ${env.NEXUS_ADR}/${env.IMAGE_NAME}-dev/latest"
                 sh "sudo docker image rm ${env.IMAGE_NAME}${env.VER_DEV}"
                 sh 'echo "Clean!"'
             }
