@@ -12,18 +12,17 @@ pipeline {
         
         // ex: VER_DEV = mondepot/dev-21.07.31-commitid
         VER_DEV = sh (returnStdout: true, script: '''
-            image=$(echo "${JOB_NAME}"| cut -d"/" -f2| tr "[:upper:]" "[:lower:]")
             date=$(date +"%Y.%m.%d")
             commit=$(echo "${GIT_COMMIT}"| head -c 10)
-            echo "-dev/$date-$commit"
+            echo "-dev:$date-$commit"
             ''').trim()
         // ex: VER_DEV = mondepot/latest
         VER_MAIN = sh (returnStdout: true, script: '''
-            image=$(echo "${JOB_NAME}"| cut -d"/" -f2| tr "[:upper:]" "[:lower:]")
-            echo "/latest"
+            echo ":latest"
             ''').trim()
     }
 	stages {
+/*
         stage ('Pre-Build') {
             steps{
                 sh 'echo "Pre-Building..."'
@@ -52,7 +51,7 @@ pipeline {
                 sh "echo '${env.VER_DEV}'"
             }
         }
-
+*/
 
 		stage ('Build-if-Main') {
             when{
@@ -111,12 +110,12 @@ pipeline {
 			}
             steps{
 			sh 'echo "Go to the Registry!"'
-			//avec numéro de version
+			//avec num��ro de version
             sh "sudo docker tag ${env.IMAGE_NAME}${env.VER_DEV} nexus.neomanis.bzh:8443/${env.IMAGE_NAME}${env.VER_DEV}"
             sh "sudo docker push ${env.NEXUS_ADR}/${env.IMAGE_NAME}${env.VER_DEV}"
             //version latest
-            sh "sudo docker tag ${env.IMAGE_NAME}${env.VER_DEV} nexus.neomanis.bzh:8443/${env.IMAGE_NAME}-dev/latest"
-            sh "sudo docker push ${env.NEXUS_ADR}/${env.IMAGE_NAME}-dev/latest"
+            sh "sudo docker tag ${env.IMAGE_NAME}${env.VER_DEV} nexus.neomanis.bzh:8443/${env.IMAGE_NAME}-dev:latest"
+            sh "sudo docker push ${env.NEXUS_ADR}/${env.IMAGE_NAME}-dev:latest"
             sh 'echo "Update to the store... OK!"'
 			}
 		}
@@ -128,20 +127,20 @@ pipeline {
                 sh 'echo "Cleaning last build"'
                 // Launch Build
                 sh "sudo docker image rm ${env.NEXUS_ADR}/${env.IMAGE_NAME}${env.VER_DEV}"
-                sh "sudo docker image rm ${env.NEXUS_ADR}/${env.IMAGE_NAME}-dev/latest"
+                sh "sudo docker image rm ${env.NEXUS_ADR}/${env.IMAGE_NAME}-dev:latest"
                 sh "sudo docker image rm ${env.IMAGE_NAME}${env.VER_DEV}"
                 sh 'echo "Clean!"'
             }
 		}
-/*
+
         stage ('Start CICD NeoServer') {
             steps{
 			//sh 'echo "Launch CICD Docker-Compose_NeoServer!"'
-            build job: '../Docker-Compose_NeoServer/main', wait: false
+            build job: '/Neo_BZH/Docker-Compose_NeoSolution/main', wait: false
             //sh 'echo "And Finish!"'
 			}
 		}
-*/
+
         
     }
 }
