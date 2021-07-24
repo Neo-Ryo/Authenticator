@@ -143,4 +143,37 @@ pipeline {
 
         
     }
+    post {
+        always {
+            deleteDir() /* clean up our workspace */
+        }
+        success {
+            office365ConnectorSend (
+                status: "SUCCESS",
+                webhookUrl: "https://lisibe.webhook.office.com/webhookb2/cbb338d9-0f46-459b-97b2-395df66dda9e@0faeb7d6-51a8-43e9-80c4-9c016e6262fb/JenkinsCI/38d67b299ac44b5b845210b44d87410e/0d5d09e7-2dd2-4b7e-8345-06a69da7292a",
+                color: '00ff00',
+                message: "Successful: ${JOB_NAME} - ${BUILD_DISPLAY_NAME}<br>Pipeline duration: ${currentBuild.durationString}"
+              )
+        }
+        unstable {
+            office365ConnectorSend (
+                status: "UNSTABLE",
+                webhookUrl: "https://lisibe.webhook.office.com/webhookb2/cbb338d9-0f46-459b-97b2-395df66dda9e@0faeb7d6-51a8-43e9-80c4-9c016e6262fb/JenkinsCI/38d67b299ac44b5b845210b44d87410e/0d5d09e7-2dd2-4b7e-8345-06a69da7292a",
+                color: 'FFBB00',
+                message: "Unstable: ${JOB_NAME} - ${BUILD_DISPLAY_NAME}<br>Pipeline duration: ${currentBuild.durationString}"
+              )
+        }
+        failure {
+            echo 'I failed :('
+            office365ConnectorSend (
+                status: "FAILED",
+                webhookUrl: "https://lisibe.webhook.office.com/webhookb2/cbb338d9-0f46-459b-97b2-395df66dda9e@0faeb7d6-51a8-43e9-80c4-9c016e6262fb/JenkinsCI/38d67b299ac44b5b845210b44d87410e/0d5d09e7-2dd2-4b7e-8345-06a69da7292a",
+                color: 'FF0000',
+                message: "Failed: ${JOB_NAME} - ${BUILD_DISPLAY_NAME}<br>Pipeline duration: ${currentBuild.durationString}"
+              )
+        }
+        changed {
+            echo 'Things were different before...'
+        }
+    }
 }
