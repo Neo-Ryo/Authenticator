@@ -20,6 +20,7 @@ pipeline {
         VER_MAIN = sh (returnStdout: true, script: '''
             echo ":latest"
             ''').trim()
+        TEAMS_HOOK = "https://lisibe.webhook.office.com/webhookb2/cbb338d9-0f46-459b-97b2-395df66dda9e@0faeb7d6-51a8-43e9-80c4-9c016e6262fb/JenkinsCI/38d67b299ac44b5b845210b44d87410e/0d5d09e7-2dd2-4b7e-8345-06a69da7292a"
     }
 	stages {
 /*
@@ -110,7 +111,7 @@ pipeline {
 			}
             steps{
 			sh 'echo "Go to the Registry!"'
-			//avec num��ro de version
+			//avec num������ro de version
             sh "sudo docker tag ${env.IMAGE_NAME}${env.VER_DEV} nexus.neomanis.bzh:8443/${env.IMAGE_NAME}${env.VER_DEV}"
             sh "sudo docker push ${env.NEXUS_ADR}/${env.IMAGE_NAME}${env.VER_DEV}"
             //version latest
@@ -150,7 +151,7 @@ pipeline {
         success {
             office365ConnectorSend (
                 status: "SUCCESS",
-                webhookUrl: "https://lisibe.webhook.office.com/webhookb2/cbb338d9-0f46-459b-97b2-395df66dda9e@0faeb7d6-51a8-43e9-80c4-9c016e6262fb/JenkinsCI/38d67b299ac44b5b845210b44d87410e/0d5d09e7-2dd2-4b7e-8345-06a69da7292a",
+                webhookUrl: "${env.TEAMS_HOOK}",
                 color: '00ff00',
                 message: "Successful: ${JOB_NAME} - ${BUILD_DISPLAY_NAME}<br>Pipeline duration: ${currentBuild.durationString}"
               )
@@ -158,7 +159,7 @@ pipeline {
         unstable {
             office365ConnectorSend (
                 status: "UNSTABLE",
-                webhookUrl: "https://lisibe.webhook.office.com/webhookb2/cbb338d9-0f46-459b-97b2-395df66dda9e@0faeb7d6-51a8-43e9-80c4-9c016e6262fb/JenkinsCI/38d67b299ac44b5b845210b44d87410e/0d5d09e7-2dd2-4b7e-8345-06a69da7292a",
+                webhookUrl: "${env.TEAMS_HOOK}",
                 color: 'FFBB00',
                 message: "Unstable: ${JOB_NAME} - ${BUILD_DISPLAY_NAME}<br>Pipeline duration: ${currentBuild.durationString}"
               )
@@ -167,7 +168,7 @@ pipeline {
             echo 'I failed :('
             office365ConnectorSend (
                 status: "FAILED",
-                webhookUrl: "https://lisibe.webhook.office.com/webhookb2/cbb338d9-0f46-459b-97b2-395df66dda9e@0faeb7d6-51a8-43e9-80c4-9c016e6262fb/JenkinsCI/38d67b299ac44b5b845210b44d87410e/0d5d09e7-2dd2-4b7e-8345-06a69da7292a",
+                webhookUrl: "${env.TEAMS_HOOK}",
                 color: 'FF0000',
                 message: "Failed: ${JOB_NAME} - ${BUILD_DISPLAY_NAME}<br>Pipeline duration: ${currentBuild.durationString}"
               )
