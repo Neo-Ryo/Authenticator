@@ -9,24 +9,14 @@
  * ---------------------------------------------------------------
  */
 
-export interface GetResponseExample {
-    foo?: { bar?: string; baz?: number; grault?: boolean };
-    qux?: string[];
-    quux?: (string | number)[];
-    corge?: { bla?: string; blabla?: string }[];
+export interface JwtToken {
+    uid?: string;
+    role?: string;
+    iat?: number;
+    exp?: number;
 }
 
-export interface ServiceStatus {
+export interface ResponseStatus {
     code: number;
-    message: string;
-}
-
-export interface ServerError {
-    statusCode: number;
-    message: string;
-}
-
-export interface InvalidRequestErrorExample {
-    statusCode: number;
     message: string;
 }
