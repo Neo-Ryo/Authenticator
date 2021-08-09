@@ -9,23 +9,22 @@
  * ---------------------------------------------------------------
  */
 
-import { ServerError, ServiceStatus } from "./data-contracts";
-import { ContentType, HttpClient, RequestParams } from "./http-client";
+import { ResponseStatus } from "./data-contracts";
+import { HttpClient, RequestParams } from "./http-client";
 
 export class Status<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
     /**
      * @description Get service status
      *
+     * @tags Services
      * @name Status
-     * @summary Check the status of the service
+     * @summary CHECK the status of the service
      * @request GET:/status
      */
-    status = (data: { status?: ServiceStatus }, params: RequestParams = {}) =>
-        this.request<ServerError, ServerError>({
+    status = (params: RequestParams = {}) =>
+        this.request<ResponseStatus, ResponseStatus>({
             path: `/status`,
             method: "GET",
-            body: data,
-            type: ContentType.Json,
             format: "json",
             ...params,
         });

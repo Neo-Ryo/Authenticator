@@ -13,6 +13,7 @@
     "prettier:fix": "prettier --write **/*.ts",
     "start": "nodemon -L index.ts",
     "swaggerGen": "npx swagger-typescript-api -p ./src/swagger/swagger.json -o ./src/swagger/api -t ./src/swagger/templates/modular --modular",
+    "swaggerBundle": "npx swagger-cli bundle ./src/swagger/baseApi.json --outfile ./src/swagger/swagger.json --type json",
     "test": "set NODE_ENV=test&& jest --detectOpenHandles --silent --verbose",
     "test:watch": "set NODE_ENV=test&& jest --detectOpenHandles --silent --verbose --watch"
   },

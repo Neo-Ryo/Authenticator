@@ -14,103 +14,26 @@
     }
   ],
   "paths": {
-    "/get-example": {
-      "get": {
-        "description": "GET example",
-        "operationId": "getExample",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "Successfull GET",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GetResponseExample"
-                },
-                "examples": {
-                  "Response for /get-example": {
-                    "value": {
-                      "foo": {
-                        "bar": "toto",
-                        "baz": 777,
-                        "grault": true
-                      },
-                      "qux": ["titi", "tutu", "tete"],
-                      "quux": [1, "toto"],
-                      "corge": [{"bla": "blub"}, {"blabla": "bla"}]
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InvalidRequestErrorExample"
-                },
-                "examples": {
-                  "Invalid request on /get-example": {
-                    "value": {
-                      "statusCode": 400,
-                      "message": "Invalid request"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/status": {
       "get": {
-        "summary": "Check the status of the service",
+        "summary": "CHECK the status of the service",
+        "tags": [
+          "Services"
+        ],
         "description": "Get service status",
         "operationId": "Status",
-        "requestBody": {
-          "description": "Status Object => Object{code: status.code, message: status.message}",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "status": {
-                    "$ref": "#/components/schemas/ServiceStatus"
-                  }
-                }
-              },
-              "examples": {
-                "Status OK": {
-                  "value": {
-                    "code": 200,
-                    "message": "ok"
-                  }
-                },
-                "Status Error": {
-                  "value": {
-                    "code": 500,
-                    "message": "Some error message"
-                  }
-                }
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "Service ok",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ServerError"
+                  "$ref": "#/components/schemas/responseStatus"
                 },
                 "examples": {
                   "Service ok": {
                     "value": {
-                      "statusCode": 200,
+                      "code": 200,
                       "message": "ok"
                     }
                   }
@@ -123,12 +46,12 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ServerError"
+                  "$ref": "#/components/schemas/responseStatus"
                 },
                 "examples": {
                   "Service Error": {
                     "value": {
-                      "statusCode": 500,
+                      "code": 500,
                       "message": "Some error message"
                     }
                   }
@@ -141,59 +64,35 @@
     }
   },
   "components": {
+    "securitySchemes": {
+      "basicAuth": {
+        "type": "http",
+        "scheme": "basic"
+      },
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
     "schemas": {
-      "GetResponseExample": {
+      "jwtToken": {
         "type": "object",
         "properties": {
-          "foo": {
-            "properties": {
-              "bar": {
-                "type": "string"
-              },
-              "baz": {
-                "type": "integer"
-              },
-              "grault": {
-                "type": "boolean"
-              }
-            }
+          "uid": {
+            "type": "string"
           },
-          "qux": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
+          "role": {
+            "type": "string"
           },
-          "quux": {
-            "type": "array",
-            "items": {
-              "oneOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "integer"
-                }
-              ]
-            }
+          "iat": {
+            "type": "integer"
           },
-          "corge": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "bla": {
-                  "type": "string"
-                },
-                "blabla": {
-                  "type": "string"
-                }
-              }
-            }
+          "exp": {
+            "type": "integer"
           }
         }
       },
-      "ServiceStatus": {
+      "responseStatus": {
         "type": "object",
         "properties": {
           "code": {
@@ -203,31 +102,10 @@
             "type": "string"
           }
         },
-        "required": ["code", "message"]
-      },
-      "ServerError": {
-        "type": "object",
-        "properties": {
-          "statusCode": {
-            "type": "integer"
-          },
-          "message": {
-            "type": "string"
-          }
-        },
-        "required": ["statusCode", "message"]
-      },
-      "InvalidRequestErrorExample": {
-        "type": "object",
-        "properties": {
-          "statusCode": {
-            "type": "integer"
-          },
-          "message": {
-            "type": "string"
-          }
-        },
-        "required": ["statusCode", "message"]
+        "required": [
+          "code",
+          "message"
+        ]
       }
     }
   }
