@@ -13,19 +13,19 @@ import { ResponseStatus } from "./data-contracts";
 import { HttpClient, RequestParams } from "./http-client";
 
 export class Status<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
-    /**
-     * @description Get service status
-     *
-     * @tags Services
-     * @name Status
-     * @summary CHECK the status of the service
-     * @request GET:/status
-     */
-    status = (params: RequestParams = {}) =>
-        this.request<ResponseStatus, ResponseStatus>({
-            path: `/status`,
-            method: "GET",
-            format: "json",
-            ...params,
-        });
+  /**
+   * @description Get service status
+   *
+   * @tags Services
+   * @name Status
+   * @summary CHECK the status of the service
+   * @request GET:/status
+   */
+  status = (params: RequestParams = {}) =>
+    this.request<ResponseStatus, ResponseStatus>({
+      path: `/status`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
 }
