@@ -17,6 +17,12 @@ JWT_SECRET="platypus to"
 
 ## Scripts
 
+Before all you can run `nvm use`, it will change your node version to lts based on `.nvmrc`. If you haven't installed it yet follow this steps:
+- `nvm install --lts`
+- `nvm use`
+
+Currently last lts version is `14.17.6`, it will change sooner or later. So when it does, simply change content in `.nvmrc` then run `nvm install --lts` and `nvm use`
+
 ### Start app
 * `yarn start`
 Server will start with nodemon to allow auto-reload
