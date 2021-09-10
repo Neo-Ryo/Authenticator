@@ -16,7 +16,7 @@
     "paths": {
         "/status": {
             "get": {
-                "summary": "CHECK the status of the service",
+                "summary": "GET the status of the service",
                 "tags": ["Services"],
                 "description": "Get service status",
                 "operationId": "Status",
