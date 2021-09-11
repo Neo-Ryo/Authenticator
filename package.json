@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc --project ./",
-    "husky:setup": "husky install && npx husky add .husky/pre-commit \"yarn prettier:fix\" && npx husky add .husky/pre-commit \"yarn lint\" && npx husky add .husky/pre-commit \"yarn test\" && npx husky add .husky/pre-push \"yarn build\"",
+    "husky:setup": "husky install && npx husky add .husky/pre-commit \"yarn prettier:fix\" && npx husky add .husky/pre-commit \"yarn lint\" && npx husky add .husky/pre-push \"yarn test\" && npx husky add .husky/pre-push \"yarn build\"",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "prettier": "prettier --check **/*.ts **/*.json",
