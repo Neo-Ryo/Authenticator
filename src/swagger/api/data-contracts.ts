@@ -10,13 +10,13 @@
  */
 
 export interface JwtToken {
-    uid?: string;
-    role?: string;
-    iat?: number;
-    exp?: number;
+  uid?: string;
+  role?: string;
+  iat?: number;
+  exp?: number;
 }
 
 export interface ResponseStatus {
-    code: number;
-    message: string;
+  code: number;
+  message: string;
 }
