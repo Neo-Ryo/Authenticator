@@ -1,112 +1,107 @@
 {
-  "openapi": "3.0.1",
-  "info": {
-    "title": "API boilerplate",
-    "description": "This is the boilerplate API documentation",
-    "license": {
-      "name": "Neomanis"
-    },
-    "version": "1.0.0"
-  },
-  "servers": [
-    {
-      "url": "http://localhost:8000/"
-    }
-  ],
-  "paths": {
-    "/status": {
-      "get": {
-        "summary": "CHECK the status of the service",
-        "tags": [
-          "Services"
-        ],
-        "description": "Get service status",
-        "operationId": "Status",
-        "responses": {
-          "200": {
-            "description": "Service ok",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/responseStatus"
-                },
-                "examples": {
-                  "Service ok": {
-                    "value": {
-                      "code": 200,
-                      "message": "ok"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Service error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/responseStatus"
-                },
-                "examples": {
-                  "Service Error": {
-                    "value": {
-                      "code": 500,
-                      "message": "Some error message"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-  "components": {
-    "securitySchemes": {
-      "basicAuth": {
-        "type": "http",
-        "scheme": "basic"
-      },
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer"
-      }
-    },
-    "schemas": {
-      "jwtToken": {
-        "type": "object",
-        "properties": {
-          "uid": {
-            "type": "string"
-          },
-          "role": {
-            "type": "string"
-          },
-          "iat": {
-            "type": "integer"
-          },
-          "exp": {
-            "type": "integer"
-          }
-        }
-      },
-      "responseStatus": {
-        "type": "object",
-        "properties": {
-          "code": {
-            "type": "integer"
-          },
-          "message": {
-            "type": "string"
-          }
+    "openapi": "3.0.1",
+    "info": {
+        "title": "API boilerplate",
+        "description": "This is the boilerplate API documentation",
+        "license": {
+            "name": "Neomanis"
         },
-        "required": [
-          "code",
-          "message"
-        ]
-      }
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000/"
+        }
+    ],
+    "paths": {
+        "/status": {
+            "get": {
+                "summary": "GET the status of the service",
+                "tags": ["Services"],
+                "description": "Get service status",
+                "operationId": "Status",
+                "responses": {
+                    "200": {
+                        "description": "Service ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/responseStatus"
+                                },
+                                "examples": {
+                                    "Service ok": {
+                                        "value": {
+                                            "code": 200,
+                                            "message": "ok"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Service error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/responseStatus"
+                                },
+                                "examples": {
+                                    "Service Error": {
+                                        "value": {
+                                            "code": 500,
+                                            "message": "Some error message"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "basicAuth": {
+                "type": "http",
+                "scheme": "basic"
+            },
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer"
+            }
+        },
+        "schemas": {
+            "jwtToken": {
+                "type": "object",
+                "properties": {
+                    "uid": {
+                        "type": "string"
+                    },
+                    "role": {
+                        "type": "string"
+                    },
+                    "iat": {
+                        "type": "integer"
+                    },
+                    "exp": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "responseStatus": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "integer"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                },
+                "required": ["code", "message"]
+            }
+        }
     }
-  }
 }

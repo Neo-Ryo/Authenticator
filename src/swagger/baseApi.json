@@ -15,7 +15,7 @@
     ],
     "paths": {
         "/status": {
-          "$ref": "./routes/status.json"
+            "$ref": "./routes/status.json"
         }
     },
     "components": {
