@@ -37,6 +37,14 @@ It will build in `./build/`
 It will setup husky to roll before commit
 If you run it multiple times you will add duplicate pre-commit hooks, so if in a doubt simply delete `.husky/` folder and run yarn `husky:setup`
 
+:warn: On windows you could run into some trouble to push your change, if so go to `./.husky/pre-push` and add before `yarn build`:
+
+```bash
+if [ -t 1 ]; then
+  exec < /dev/tty
+fi
+```
+
 ### Jest
 #### Simple test run
 * `yarn test`
