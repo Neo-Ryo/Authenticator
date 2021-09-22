@@ -59,6 +59,11 @@ It will then help to bundle all json documentation files into one swagger.json w
 - `yarn swaggerGen`
 It will generate a documentation accessible on `/apiDocs` and interface relative to app
 
+#### Generate swagger file + documentation
+
+-   `yarn swaggerFull`
+    It will combine swaggerBundle and swaggerGen and run a prettier:fix to clean it all
+
 ### Prettier
 #### Check project format
 - `yarn prettier`
