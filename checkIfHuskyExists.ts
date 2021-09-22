@@ -8,5 +8,6 @@ if (
     process.env.NODE_ENV !== "production" &&
     !fs.existsSync("./.husky/pre-commit") &&
     !fs.existsSync("./.husky/pre-push")
-)
+) {
     throw new Error("Error: .husky directory or pre-commit file is missing, run yarn husky:setup");
+}
