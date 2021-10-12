@@ -4,3 +4,4 @@ logs/
 .env
 .husky/
 http/
+coverage/
