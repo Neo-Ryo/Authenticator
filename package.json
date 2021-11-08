@@ -4,6 +4,9 @@
   "description": "Simple boilerplate with prettier and eslint setup",
   "main": "index.ts",
   "license": "MIT",
+  "engines": {
+    "node": ">=16.13.0"
+  },
   "scripts": {
     "build": "tsc --project ./",
     "husky:check": "node checkIfHuskyExists.ts",
@@ -45,6 +48,7 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
+    "@neomanis/register-utilities": "^0.4.3",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
