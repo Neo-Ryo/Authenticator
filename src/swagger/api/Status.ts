@@ -18,7 +18,7 @@ export class Status<SecurityDataType = unknown> extends HttpClient<SecurityDataT
      *
      * @tags Services
      * @name Status
-     * @summary CHECK the status of the service
+     * @summary GET the status of the service
      * @request GET:/status
      */
     status = (params: RequestParams = {}) =>

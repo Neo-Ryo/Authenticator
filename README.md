@@ -3,11 +3,13 @@
 ### Introduction
 This is a simple boilerplate for services, you will find several feature that will help you get running with your service. It is far from perfect, so don't make any hesitation to make PR with your improved and usefull feature.
 #### Environment variables :
-- NODE_ENV=development
-- PORT=8080
-- FRONT_URL=http://localhost:3000
-- SECRET="narwhal are beautiful"
-- JWT_SECRET="platypus to"
+- SECRET=Funny chicken
+- NODE_ENV=dev
+- LOCAL_PORT=9999
+- LOCAL_URL=http://localhost:9999
+- NEO_SERVER_URL=http://localhost:3000
+- NEO_HELPER_URL=http://localhost:3001
+- JWT_SECRET=Miraculous platypus
 
 #### Exposed Port:
 - 8080
@@ -18,10 +20,10 @@ This is a simple boilerplate for services, you will find several feature that wi
 ## Scripts
 
 Before all you can run `nvm use`, it will change your node version to lts based on `.nvmrc`. If you haven't installed it yet follow this steps:
-- `nvm install 14.17.6`
+- `nvm install 16.13.0`
 - `nvm use`
 
-Currently last lts version is `14.17.6`, it will change sooner or later. So when it does, simply change content in `.nvmrc` then run `nvm install 14.17.6` and `nvm use`
+Currently last lts version is `16.13.0`, it will change sooner or later. So when it does, simply change content in `.nvmrc` then run `nvm install 16.13.0` and `nvm use`
 
 ### Start app
 - `yarn start`
@@ -53,15 +55,15 @@ fi
 
 ### Swagger
 #### Some prerequisites
-- `yarn swaggerBundle`
-It will then help to bundle all json documentation files into one swagger.json with the command `yarn swaggerBundle`, after that you can just use `yarn swaggerGen` command.
+- `yarn swagger:bundle`
+It will then help to bundle all json documentation files into one swagger.json with the command `yarn swagger:bundle`, after that you can just use `yarn swagger:gen` command.
 #### Generate swagger documentation
-- `yarn swaggerGen`
+- `yarn swagger:gen`
 It will generate a documentation accessible on `/apiDocs` and interface relative to app
 
 #### Generate swagger file + documentation
 
--   `yarn swaggerFull`
+-   `yarn swagger:full`
     It will combine swaggerBundle and swaggerGen and run a prettier:fix to clean it all
 
 ### Prettier
