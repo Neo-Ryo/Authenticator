@@ -6,6 +6,7 @@
         "outDir": "./build",
         "esModuleInterop": true,
         "strict": true,
+        "useUnknownInCatchVariables": false,
         "resolveJsonModule": true,
         "baseUrl": "./",
         "paths": {
