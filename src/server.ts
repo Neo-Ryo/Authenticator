@@ -1,11 +1,11 @@
 import express from "express";
-import morganMiddleware from "./src/utils/morganMiddleware";
+import morganMiddleware from "./utils/morganMiddleware";
 import helmet from "helmet";
 import cors from "cors";
 import dotenv from "dotenv";
 import swaggerUi from "swagger-ui-express";
-import * as swaggerDoc from "./src/swagger/swagger.json";
-import { statusRouter } from "./src/routes/statusRoutes";
+import * as swaggerDoc from "./swagger/swagger.json";
+import { statusRouter } from "./routes/statusRoutes";
 
 export const app = express();
 

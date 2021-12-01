@@ -1,6 +1,6 @@
 // import { connectToRegisterService, ServiceName } from "@neomanis/register-utilities";
 import { app } from "./server";
-import logger from "./src/utils/logger";
+import logger from "./utils/logger";
 
 import * as dotenv from "dotenv";
 dotenv.config();
