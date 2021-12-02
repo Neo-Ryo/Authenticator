@@ -31,7 +31,9 @@ const format = winston.format.combine(
 );
 
 const transports = [
-    new winston.transports.Console(),
+    new winston.transports.Console({
+        silent: process.argv.indexOf("--silent") >= 0 || process.env.NODE_ENV === "test",
+    }),
     new winston.transports.File({
         filename: "logs/error.log",
         level: "error",
