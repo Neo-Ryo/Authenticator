@@ -9,8 +9,8 @@
   },
   "scripts": {
     "build": "tsc --project ./",
-    "husky:check": "node checkIfHuskyExists.ts",
-    "husky:setup": "husky install && npx husky add .husky/pre-commit \"yarn prettier:fix\" && npx husky add .husky/pre-commit \"yarn lint\" && npx husky add .husky/pre-push \"yarn test\" && npx husky add .husky/pre-push \"yarn build\"",
+    "husky:check": "node --require ts-node/register ./checkIfHuskyExists",
+    "husky:setup": "node --require ts-node/register ./prepare",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "prettier": "prettier --check **/*.{ts,json}",

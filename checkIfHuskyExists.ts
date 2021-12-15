@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const fs = require("fs");
-const dotenv = require("dotenv");
+import fs from "fs";
+import dotenv from "dotenv";
 
 dotenv.config();
 
