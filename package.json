@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "tsc --project ./",
-    "husky:check": "node checkIfHuskyExists.ts",
+    "husky:check": "node --require ts-node/register ./checkIfHuskyExists",
     "husky:setup": "node --require ts-node/register ./prepare",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
