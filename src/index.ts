@@ -3,13 +3,13 @@ import logger from "./utils/logger";
 import https from "https";
 import fs from "fs";
 import { httpsAgent } from "./agent";
-import { connectToRegisterService, ServiceName, updateActiveDependencies } from "@neomanis/neo-utilities";
-import {
-    activeOtherDependencies,
-    activeRequiredDependencies,
-    otherDependencies,
-    requiredDependencies,
-} from "./utils/dependencies";
+// import { connectToRegisterService, ServiceName, updateActiveDependencies } from "@neomanis/neo-utilities";
+// import {
+//     activeOtherDependencies,
+//     activeRequiredDependencies,
+//     otherDependencies,
+//     requiredDependencies,
+// } from "./utils/dependencies";
 import * as dotenv from "dotenv";
 
 dotenv.config();
@@ -37,22 +37,23 @@ const { LOCAL_URL, LOCAL_PORT, REGISTER_URL, SERVICE_KEY, SERVICE_CRT, CA_CRT } 
             });
 
         // will retry every 10 sec if connection to register service fails.
-        const actualDependencies = await connectToRegisterService(
-            ServiceName.ITSM_SERVICE,
-            `${LOCAL_URL}`,
-            requiredDependencies,
-            otherDependencies,
-            `${REGISTER_URL}/services`,
-            httpsAgent
-        );
-        updateActiveDependencies(
-            actualDependencies.requiredDependencies,
-            activeRequiredDependencies,
-            requiredDependencies,
-            actualDependencies.otherDependencies,
-            activeOtherDependencies,
-            otherDependencies
-        );
+        // TODO: setup first argument of `connectToRegisterService` to fit service's name
+        // const actualDependencies = await connectToRegisterService(
+        //     ServiceName.YOUR_SERVICE_NAME,
+        //     `${LOCAL_URL}`,
+        //     requiredDependencies,
+        //     otherDependencies,
+        //     `${REGISTER_URL}/services`,
+        //     httpsAgent
+        // );
+        // updateActiveDependencies(
+        //     actualDependencies.requiredDependencies,
+        //     activeRequiredDependencies,
+        //     requiredDependencies,
+        //     actualDependencies.otherDependencies,
+        //     activeOtherDependencies,
+        //     otherDependencies
+        // );
     } catch (error) {
         logger.error(error);
     }
