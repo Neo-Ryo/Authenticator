@@ -1,15 +1,27 @@
 # Service boilerplate template
 
 ### Introduction
-This is a simple boilerplate for services, you will find several feature that will help you get running with your service. It is far from perfect, so don't make any hesitation to make PR with your improved and usefull feature.
+This is a simple boilerplate for services, you will find several feature that will help you get running with your service.
+It is far from perfect, so don't make any hesitation to make PR with your improved and usefull feature.
+
+### Getting started
+- `nvm use` to switch to correct node version
+- `yarn install`
+- `yarn husky:setup` before your first run, it will be set up for all future runs
+- copy and paste `.env.example` into `.env` with custom values fitting your context
+- `yarn start`
+
+Server will start on given port and run with nodemon to allow auto-reload
+
 #### Environment variables :
-- SECRET=Funny chicken
-- NODE_ENV=dev
-- LOCAL_PORT=9999
-- LOCAL_URL=http://localhost:9999
-- NEO_SERVER_URL=http://localhost:3000
-- NEO_HELPER_URL=http://localhost:3001
-- JWT_SECRET=Miraculous platypus
+- NODE_ENV=development
+- LOCAL_PORT=8080
+- LOCAL_URL=https://services.neomanis.bzh:8080
+- REGISTER_URL=https://services.neomanis.bzh:8007
+- CA_CRT=neomanis-ca.crt
+- SERVICE_CRT=services.crt
+- SERVICE_KEY=services.key
+
 
 #### Exposed Port:
 - 8080
@@ -17,17 +29,13 @@ This is a simple boilerplate for services, you will find several feature that wi
 #### Internal Service Name:
 - boilerplateservice
 
-## Scripts
+### Scripts
 
 Before all you can run `nvm use`, it will change your node version to lts based on `.nvmrc`. If you haven't installed it yet follow this steps:
 - `nvm install 16.13.0`
 - `nvm use`
 
 Currently last lts version is `16.13.0`, it will change sooner or later. So when it does, simply change content in `.nvmrc` then run `nvm install 16.13.0` and `nvm use`
-
-### Start app
-- `yarn start`
-Server will start with nodemon to allow auto-reload
 
 ### Build app
 - `yarn build`
@@ -50,8 +58,11 @@ fi
 ### Jest
 #### Simple test run
 - `yarn test`
-#### Watch test tun
+#### Watch test run
 - `yarn test:watch`
+
+#### Coverage test run
+- `yarn test:coverage`
 
 ### Swagger
 #### Some prerequisites
