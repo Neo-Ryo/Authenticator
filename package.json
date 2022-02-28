@@ -52,7 +52,6 @@
   },
   "dependencies": {
     "@neomanis/neo-utilities": "^1.0.2",
-    "@neomanis/register-utilities": "^0.4.3",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
