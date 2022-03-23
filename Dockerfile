@@ -1,11 +1,7 @@
-FROM node:16-alpine
+FROM node:16-alpine as build
 
-ARG SERVICENAME
+WORKDIR /app
 
-RUN mkdir -p /opt/neosolutions/$SERVICENAME
-WORKDIR /opt/neosolutions/$SERVICENAME
-
-# Add there echo commands to build config files, etc
 RUN echo 'NODE_ENV=production' > .env
 
 # files which should not be copied have to be listed in .dockerignore
@@ -14,5 +10,16 @@ COPY . ./
 RUN yarn install
 RUN yarn run build
 
-CMD [ "yarn" , "start" ]
+FROM node:16-alpine
 
+WORKDIR /opt/neosolutions
+
+# copy package.json to install only production dependencies
+COPY package.json ./
+COPY .yarnrc ./
+RUN yarn install --production
+
+# copy from previous image only build directory
+COPY --from=build /app/build/src .
+
+CMD [ "node" , "index.js" ]
