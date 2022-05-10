@@ -1,4 +1,4 @@
-# Story n° <number>
+# Story/Feature/Issue n° <number>
 
 ### What is it about?
 
