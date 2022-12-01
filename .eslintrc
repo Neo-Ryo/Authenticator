@@ -4,17 +4,16 @@
         "jest": true
     },
     "parser": "@typescript-eslint/parser",
-    "plugins": [
-        "prettier",
-        "@typescript-eslint"
-    ],
-    "rules": {},
+    "plugins": ["prettier", "@typescript-eslint"],
+    "rules": {
+        "@typescript-eslint/no-non-null-assertion": "off"
+    },
     "overrides": [
         {
             "files": ["*.ts", "*.tsx"],
             "rules": {
                 "prettier/prettier": ["warn", {}, { "usePrettierrc": true }]
-    	    }
+            }
         }
     ],
     "extends": [
@@ -24,3 +23,4 @@
         "plugin:prettier/recommended"
     ]
 }
+

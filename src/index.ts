@@ -1,59 +1,21 @@
 import { app } from "./server";
 import logger from "./utils/logger";
-import https from "https";
-import fs from "fs";
-import { httpsAgent } from "./agent";
-// import { connectToRegisterService, ServiceName, updateActiveDependencies } from "@neomanis/neo-utilities";
-// import {
-//     activeOtherDependencies,
-//     activeRequiredDependencies,
-//     otherDependencies,
-//     requiredDependencies,
-// } from "./utils/dependencies";
-import * as dotenv from "dotenv";
+import { config } from "dotenv";
+import { User } from "./entities/User";
+import { sequelizeInstance } from "./databaseInit";
 
-dotenv.config();
+config();
 
-const { LOCAL_URL, LOCAL_PORT, REGISTER_URL, SERVICE_KEY, SERVICE_CRT, CA_CRT } = process.env;
+const { LOCAL_PORT, DB_NAME } = process.env;
 
 (async () => {
     try {
-        if (!LOCAL_URL || !LOCAL_PORT || !REGISTER_URL || !SERVICE_KEY || !SERVICE_CRT || !CA_CRT) {
-            throw new Error("Missing environment variables");
-        }
-        https
-            .createServer(
-                {
-                    cert: httpsAgent.options.cert,
-                    key: httpsAgent.options.key,
-                    ca: [fs.readFileSync(`./certificates/store/${CA_CRT}`)],
-                    requestCert: true,
-                    rejectUnauthorized: httpsAgent.options.rejectUnauthorized,
-                },
-                app
-            )
-            .listen(LOCAL_PORT, () => {
-                logger.info(`Server running on port: ${LOCAL_PORT}`);
-            });
-
-        // will retry every 10 sec if connection to register service fails.
-        // TODO: setup first argument of `connectToRegisterService` to fit service's name
-        // const actualDependencies = await connectToRegisterService(
-        //     ServiceName.YOUR_SERVICE_NAME,
-        //     `${LOCAL_URL}`,
-        //     requiredDependencies,
-        //     otherDependencies,
-        //     `${REGISTER_URL}/services`,
-        //     httpsAgent
-        // );
-        // updateActiveDependencies(
-        //     actualDependencies.requiredDependencies,
-        //     activeRequiredDependencies,
-        //     requiredDependencies,
-        //     actualDependencies.otherDependencies,
-        //     activeOtherDependencies,
-        //     otherDependencies
-        // );
+        await sequelizeInstance.authenticate();
+        await User.sync({ force: true });
+        app.listen(LOCAL_PORT || 9000, () => {
+            logger.info(`Database ${DB_NAME}, connected`);
+            logger.info(`Server running on port: ${LOCAL_PORT}`);
+        });
     } catch (error) {
         logger.error(error);
     }

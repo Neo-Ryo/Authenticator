@@ -1,8 +1,0 @@
-{
-    "jwtToken": {
-        "$ref": "./jwtToken.json"
-    },
-    "responseStatus": {
-        "$ref": "./responseStatus.json"
-    }
-}
