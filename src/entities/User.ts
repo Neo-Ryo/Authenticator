@@ -17,10 +17,10 @@ export const User = sequelizeInstance.define("User", {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    temp_secret: {
+    secret: {
         type: DataTypes.STRING,
     },
-    secret: {
+    totp_url: {
         type: DataTypes.STRING,
     },
 });

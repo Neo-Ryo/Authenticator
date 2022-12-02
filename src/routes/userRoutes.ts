@@ -3,7 +3,8 @@ import { User } from "../entities/User";
 import { v4 } from "uuid";
 import { sign, verify } from "jsonwebtoken";
 import { config } from "dotenv";
-import { totp } from "otplib";
+import { totp, authenticator, hotp } from "otplib";
+import { toDataURL } from "qrcode";
 
 config();
 
@@ -15,9 +16,6 @@ userRouter.post("/register/:neoid", async (req, res) => {
     try {
         const neoid = parseInt(req.params.neoid as string);
         const { uid } = req.body;
-        // Create temporary secret until it it verified
-        // const temp_secret = sign({ neoid }, SECRET_TOTP!, { algorithm: "HS256" });
-        const temp_secret = totp.generate(SECRET_TOTP!);
         // Create user in the database
         let user = await User.findOne({
             where: {
@@ -27,13 +25,39 @@ userRouter.post("/register/:neoid", async (req, res) => {
         if (user) {
             return res.status(400).json("User already exist");
         }
-        user = await User.create({ neoId: neoid, directoryUid: uid, temp_secret });
-        console.log(user);
+        // Create temporary secret until it it verified
+        const secret = authenticator.generateSecret();
+        const totp_url = `otpauth://totp/${uid}?secret=${secret}`;
+        const code = await toDataURL(totp_url);
+        user = await User.create({ neoId: neoid, directoryUid: uid, secret, totp_url });
+        console.log({ uuid, secret: secret });
+        // otpauth://totp/test?secret=secret
+        // Send user id and base32 key to user
+        res.status(200).json({ user, code });
+        // res.status(200).json({ path: req.path });
+    } catch (e) {
+        console.log(e);
+        res.status(500).json({ message: "Error generating secret key" });
+    }
+});
 
-        console.log({ uuid, secret: temp_secret });
+userRouter.get("/getqr/:neoid", async (req, res) => {
+    try {
+        const neoid = parseInt(req.params.neoid as string);
+        const user = await User.findOne({
+            where: {
+                neoId: neoid,
+            },
+        });
+        if (!user) {
+            return res.status(400).json("User not found");
+        }
+        const parsedUser = JSON.parse(JSON.stringify(user));
+        console.log(parsedUser);
+        const code = await toDataURL(parsedUser.totp_url);
 
         // Send user id and base32 key to user
-        res.status(200).json(user);
+        res.status(200).json(code);
         // res.status(200).json({ path: req.path });
     } catch (e) {
         console.log(e);
@@ -56,15 +80,13 @@ userRouter.post("/verify/:neoid", async (req, res) => {
         }
         const user = JSON.parse(JSON.stringify(userFound));
         console.log(user);
-        const secret = user.temp_secret;
-        verify(token, SECRET_TOTP!, async function (err: any, decoded: any) {
-            if (err) {
-                throw Error("Invalid token");
-            }
-            console.log(decoded); // bar
-            await User.update({ secret }, { where: { neoId: neoid } });
-            res.json({ verified: true });
-        });
+        const secret = user.secret;
+        const code = authenticator.generate(secret);
+        if (code === token) {
+            res.status(200).json("verified");
+        } else {
+            res.status(200).json("Not allowed");
+        }
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: error.message });
