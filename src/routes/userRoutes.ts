@@ -1,18 +1,15 @@
 import { Router } from "express";
 import { User } from "../entities/User";
 import { v4 } from "uuid";
-import { sign, verify } from "jsonwebtoken";
 import { config } from "dotenv";
-import { totp, authenticator, hotp } from "otplib";
+import { authenticator } from "otplib";
 import { toDataURL } from "qrcode";
 
 config();
 
 export const userRouter = Router();
-const { SECRET_TOTP } = process.env;
 
 userRouter.post("/register/:neoid", async (req, res) => {
-    const uuid = v4();
     try {
         const neoid = parseInt(req.params.neoid as string);
         const { uid } = req.body;
@@ -30,14 +27,12 @@ userRouter.post("/register/:neoid", async (req, res) => {
         const totp_url = `otpauth://totp/${uid}?secret=${secret}`;
         const code = await toDataURL(totp_url);
         user = await User.create({ neoId: neoid, directoryUid: uid, secret, totp_url });
-        console.log({ uuid, secret: secret });
         // otpauth://totp/test?secret=secret
         // Send user id and base32 key to user
         res.status(200).json({ user, code });
-        // res.status(200).json({ path: req.path });
     } catch (e) {
         console.log(e);
-        res.status(500).json({ message: "Error generating secret key" });
+        res.status(500).json({ message: "Nah, won't do it" });
     }
 });
 
@@ -79,7 +74,6 @@ userRouter.post("/verify/:neoid", async (req, res) => {
             throw Error();
         }
         const user = JSON.parse(JSON.stringify(userFound));
-        console.log(user);
         const secret = user.secret;
         const code = authenticator.generate(secret);
         if (code === token) {
