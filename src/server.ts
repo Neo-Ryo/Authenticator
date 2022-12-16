@@ -1,5 +1,4 @@
 import express from "express";
-import morganMiddleware from "./utils/morganMiddleware";
 import helmet from "helmet";
 import cors from "cors";
 import cookieParser from "cookie-parser";
@@ -12,7 +11,6 @@ dotenv.config();
 
 app.use(cookieParser());
 app.use(helmet());
-app.use(morganMiddleware);
 app.use(
     express.urlencoded({
         extended: true,
